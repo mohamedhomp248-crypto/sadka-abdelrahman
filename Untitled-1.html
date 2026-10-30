@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صدقة جارية - المرحوم عبدالرحمن</title>
+    <!-- خطوط عربية -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- أيقونات FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1b4d3e;
+            --secondary-color: #2e8b57;
+            --accent-color: #d4af37;
+            --bg-light: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        .profile-img-container {
+            width: 170px;
+            height: 170px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            border: 4px solid var(--accent-color);
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.3rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 700;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .card h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+        }
+
+        /* الختمات والمؤشر */
+        .khatma-status {
+            background: #eef5f2;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .juz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .juz-card {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: #fafafa;
+        }
+
+        .juz-card.available { border-color: #27ae60; color: #27ae60; }
+        .juz-card.reading { border-color: #f39c12; background: #fffdf8; color: #d35400; }
+        .juz-card.completed { border-color: #7f8c8d; background: #ecf0f1; color: #7f8c8d; text-decoration: line-through; }
+
+        /* الأذكار المتنوعة */
+        .dhikr-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .dhikr-btn {
+            background: #eef5f2;
+            border: 1px solid var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .dhikr-btn.active {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .counter-box {
+            text-align: center;
+            padding: 25px;
+            background: #f9fbf9;
+            border-radius: 12px;
+            border: 1px solid #e2ece7;
+        }
+
+        .counter-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .btn-count {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 15px 45px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 139, 87, 0.3);
+            transition: transform 0.1s ease;
+        }
+
+        .btn-count:active {
+            transform: scale(0.95);
+        }
+
+        /* الصوتيات والتلاوة */
+        .audio-player {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .audio-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border-right: 4px solid var(--secondary-color);
+        }
+
+        /* حائط الأدعية */
+        .dua-input {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .dua-input input, .dua-input textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .dua-input button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .dua-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .dua-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-right: 4px solid var(--accent-color);
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--primary-color);
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- صورة المتوفى -->
+        <div class="profile-img-container">
+            <img src="abdo.jpg" alt="عبدالرحمن" onerror="this.src='https://via.placeholder.com/170?text=عبدالرحمن'">
+        </div>
+        <h1>صدقة جارية على روح المغفور له بإذن الله</h1>
+        <h1>عبدالرحمن</h1>
+        <p>اللهم اغفر له وارحمه وعافه واعف عنه وأكرم نزله ووسع مدخله</p>
+    </header>
+
+    <nav>
+        <a href="#khatma"><i class="fa-solid fa-book-quran"></i> الختمة</a>
+        <a href="#dhikr"><i class="fa-solid fa-hands-praying"></i> التسبيح</a>
+        <a href="#recitation"><i class="fa-solid fa-headphones"></i> التلاوات</a>
+        <a href="#dua"><i class="fa-solid fa-heart"></i> الأدعية</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- قسم الختمة (100 ختمة) -->
+        <section id="khatma" class="card">
+            <h2><i class="fa-solid fa-book-open"></i> الختمة القرآنية المشتركة (هدف 100 ختمة)</h2>
+            
+            <div class="khatma-status">
+                <h3>الختمة الحالية: <span id="currentKhatmaNo" style="color:var(--secondary-color);">1</span> من 100</h3>
+                <p>الأجزاء المكتملة في هذه الختمة: <span id="completedJuzCount">0</span> / 30</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <small>إجمالي الأجزاء المكتملة كلياً: <span id="totalJuzAllKhatmas">0</span> جزء</small>
+            </div>
+
+            <p style="margin-bottom: 10px; font-weight: bold;">اضغط على الجزء لحجزه أو إتمام قراءته:</p>
+            <div class="juz-grid" id="juzGrid">
+                <!-- أجزاء القرآن 30 -->
+            </div>
+        </section>
+
+        <!-- قسم الأذكار والتسبيح المتنوعة -->
+        <section id="dhikr" class="card">
+            <h2><i class="fa-solid fa-gem"></i> التسبيحات والأذكار المتنوعة</h2>
+            
+            <!-- أزرار اختيار الذكر -->
+            <div class="dhikr-tabs">
+                <button class="dhikr-btn active" onclick="selectDhikr(0)">سبحان الله وبحمده</button>
+                <button class="dhikr-btn" onclick="selectDhikr(1)">أستغفر الله العظيم</button>
+                <button class="dhikr-btn" onclick="selectDhikr(2)">اللهم صلِّ على محمد</button>
+                <button class="dhikr-btn" onclick="selectDhikr(3)">لا إله إلا الله</button>
+                <button class="dhikr-btn" onclick="selectDhikr(4)">الحمد لله</button>
+                <button class="dhikr-btn" onclick="selectDhikr(5)">الله أكبر</button>
+                <button class="dhikr-btn" onclick="selectDhikr(6)">لا حول ولا قوة إلا بالله</button>
+            </div>
+
+            <!-- العداد المباشر -->
+            <div class="counter-box">
+                <p id="dhikrText" style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color);">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ</p>
+                <div class="counter-number" id="currentDhikrCount">0</div>
+                <button class="btn-count" onclick="addDhikr()">اضغط للتسبيح <i class="fa-solid fa-hand-pointer"></i></button>
+                <p style="margin-top: 15px; font-size: 0.95rem; color: #666;">إجمالي جميع التسبيحات: <strong id="totalAllDhikr">0</strong></p>
+            </div>
+        </section>
+
+        <!-- قسم التلاوة والاستماع -->
+        <section id="recitation" class="card">
+            <h2><i class="fa-solid fa-headphones"></i> تلاوات خاشعة لروح الفقيد</h2>
+            
+            <div class="audio-item">
+                <span><strong>سورة البقرة</strong> - الشيخ مشاري العفاسي</span>
+                <audio controls class="audio-player">
+                    <source src="https://server8.mp3quran.net/afs/002.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="audio-item">
+                <span><strong>سورة يس</strong> - الشيخ عبدالباسط عبدالصمد</span>
+                <audio controls class="audio-player">
+                    <source src="https://server7.mp3quran.net/basit/036.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+
+            <div class="audio-item">
+                <span><strong>سورة الملك</strong> - الشيخ ماهر المعيقلي</span>
+                <audio controls class="audio-player">
+                    <source src="https://server12.mp3quran.net/maher/067.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+        </section>
+
+        <!-- قسم حائط الأدعية -->
+        <section id="dua" class="card">
+            <h2><i class="fa-solid fa-pen-to-square"></i> حائط الأدعية والإهداءات</h2>
+            <div class="dua-input">
+                <input type="text" id="visitorName" placeholder="إسمك (اختياري)">
+                <textarea id="duaContent" rows="3" placeholder="اكتب دعاءً أو إهداءً لروح عبدالرحمن..."></textarea>
+                <button onclick="addDua()">إرسال الدعاء</button>
+            </div>
+            <div class="dua-list" id="duaList">
+                <div class="dua-item">
+                    <strong>صديقك:</strong>
+                    <p>اللهم اجعل قبره روضة من رياض الجنة ولا تجعله حفرة من حفر النار، واجمعنا به في الفردوس الأعلى.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>نسألكم الفاتحة والدعاء للمرحوم عبدالرحمن ولكافة أموات المسلمين</p>
+    </footer>
+
+    <script>
+        // الأذكار المتنوعة
+        const dhikrList = [
+            { text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ ، سُبْحَانَ اللَّهِ الْعَظِيمِ", count: 0 },
+            { text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ وَأَتُوبُ إِلَيْهِ", count: 0 },
+            { text: "اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَى نَبِيِّنَا مُحَمَّدٍ", count: 0 },
+            { text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ", count: 0 },
+            { text: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ", count: 0 },
+            { text: "اللَّهُ أَكْبَرُ كَبِيرًا", count: 0 },
+            { text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ الْعَلِيِّ الْعَظِيمِ", count: 0 }
+        ];
+
+        let selectedDhikrIndex = 0;
+        let totalDhikrCount = 0;
+
+        // الختمات والأجزاء
+        let currentKhatma = 1;
+        let completedJuzInCurrent = 0;
+        let totalJuzAll = 0;
+        let juzStates = Array(30).fill(0);
+
+        function selectDhikr(index) {
+            selectedDhikrIndex = index;
+            document.querySelectorAll('.dhikr-btn').forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            document.getElementById('dhikrText').innerText = dhikrList[index].text;
+            document.getElementById('currentDhikrCount').innerText = dhikrList[index].count;
+        }
+
+        function addDhikr() {
+            dhikrList[selectedDhikrIndex].count++;
+            totalDhikrCount++;
+            document.getElementById('currentDhikrCount').innerText = dhikrList[selectedDhikrIndex].count;
+            document.getElementById('totalAllDhikr').innerText = totalDhikrCount;
+        }
+
+        function renderJuzGrid() {
+            const grid = document.getElementById('juzGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= 30; i++) {
+                const state = juzStates[i - 1];
+                let stateClass = 'available';
+                let stateText = 'متاح';
+
+                if (state === 1) {
+                    stateClass = 'reading';
+                    stateText = 'قيد القراءة';
+                } else if (state === 2) {
+                    stateClass = 'completed';
+                    stateText = 'تمت القراءة';
+                }
+
+                const card = document.createElement('div');
+                card.className = `juz-card ${stateClass}`;
+                card.innerHTML = `<strong>الجزء ${i}</strong><br><small>${stateText}</small>`;
+                card.onclick = () => toggleJuzState(i - 1);
+                grid.appendChild(card);
+            }
+
+            updateProgress();
+        }
+
+        function toggleJuzState(index) {
+            juzStates[index] = (juzStates[index] + 1) % 3;
+            completedJuzInCurrent = juzStates.filter(s => s === 2).length;
+
+            if (completedJuzInCurrent === 30) {
+                alert(`الحمد لله! تم إتمام الختمة رقم ${currentKhatma} بنجاح. جاري الانتقال للختمة التالية!`);
+                totalJuzAll += 30;
+                currentKhatma++;
+                juzStates = Array(30).fill(0);
+                completedJuzInCurrent = 0;
+            }
+
+            renderJuzGrid();
+        }
+
+        function updateProgress() {
+            document.getElementById('currentKhatmaNo').innerText = currentKhatma;
+            document.getElementById('completedJuzCount').innerText = completedJuzInCurrent;
+            document.getElementById('totalJuzAllKhatmas').innerText = totalJuzAll + completedJuzInCurrent;
+            
+            const percentage = (completedJuzInCurrent / 30) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        function addDua() {
+            const name = document.getElementById('visitorName').value || 'فاعل خير';
+            const text = document.getElementById('duaContent').value;
+
+            if (!text.trim()) {
+                alert('يرجى كتابة الدعاء أولاً');
+                return;
+            }
+
+            const duaList = document.getElementById('duaList');
+            const item = document.createElement('div');
+            item.className = 'dua-item';
+            item.innerHTML = `<strong>${name}:</strong><p>${text}</p>`;
+            
+            duaList.prepend(item);
+            
+            document.getElementById('duaContent').value = '';
+            document.getElementById('visitorName').value = '';
+        }
+
+        // تشغيل شبكة الأجزاء عند فتح الصفحة
+        renderJuzGrid();
+    </script>
+</body>
+</html>
